@@ -16,6 +16,12 @@ program mpi_hello
             integer(c_int), intent(out) :: ierr
         end subroutine my_MPI_Comm_rank
 
+        subroutine my_MPI_Barrier(Fcomm, ierr) bind(C, name="my_MPI_Barrier")
+            use iso_c_binding
+            integer(c_int), value :: Fcomm
+            integer(c_int), intent(out) :: ierr
+        end subroutine my_MPI_Barrier
+
     end interface
 
     integer(c_int) :: ierr
@@ -31,7 +37,7 @@ program mpi_hello
     call my_MPI_Comm_rank(c_mpi_comm, rank, ierr)
 
     ! ! Synchronize all processes before proceeding
-    call MPI_Barrier(MPI_COMM_WORLD, ierr)
+    call my_MPI_Barrier(c_mpi_comm, ierr)
 
     ! Print "Hello, World!" from all processes
     if (rank == 2) then
