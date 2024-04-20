@@ -13,6 +13,9 @@ TARGET = hello_world
 # Include path
 INCLUDE_PATH = /usr/local/include/legio
 
+# Library path
+LIB_PATH = /usr/local/lib/
+
 # Libraries
 LIBS = legio
 
