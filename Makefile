@@ -5,7 +5,7 @@ MPIFC = mpif90
 FFLAGS = -Wall -Wextra
 
 # Source files
-SRC = hello_world.f90
+SRC = mpi_hello.f90 mpi_interface.f90
 
 # Executable name
 TARGET = hello_world
