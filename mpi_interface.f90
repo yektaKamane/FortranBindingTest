@@ -7,6 +7,13 @@ module mpi_interface
             use iso_c_binding
         end subroutine raise_sigint_c
 
+        subroutine my_MPI_Init(Fcomm_w, Fcomm_s, ierr) bind(C, name="my_MPI_Init")
+            use iso_c_binding
+            integer(c_int), value :: Fcomm_w
+            integer(c_int), value :: Fcomm_s
+            integer(c_int) :: ierr
+        end subroutine my_MPI_Init
+
         subroutine my_MPI_Comm_rank(Fcomm, rank, ierr) bind(C, name="my_MPI_Comm_rank")
             use iso_c_binding
             integer(c_int), value :: Fcomm
