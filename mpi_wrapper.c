@@ -64,12 +64,12 @@ void my_MPI_Waitall(int *count, MPI_Fint *array_of_requests, MPI_Fint *array_of_
 
 
 // MPI_ISEND
-void my_MPI_Isend(void *buf, int *count, MPI_Fint *datatype, int *dest, int *tag, MPI_Fint *comm, MPI_Fint *request, int *ierr) {
-    MPI_Comm c_comm = MPI_Comm_f2c(*comm);
-    MPI_Datatype c_datatype = MPI_Type_f2c(*datatype);
-    MPI_Request c_request = MPI_Request_f2c(*request);
+void my_MPI_Isend(void *buf, int count, MPI_Fint datatype, int dest, int tag, MPI_Fint Fcomm, MPI_Fint request, int *ierr) {
+    MPI_Comm c_comm = MPI_Comm_f2c(Fcomm);
+    MPI_Datatype c_datatype = MPI_Type_f2c(datatype);
+    MPI_Request c_request = MPI_Request_f2c(request);
     
-    *ierr = MPI_Isend(buf, *count, c_datatype, *dest, *tag, c_comm, &c_request);
+    MPI_Isend(buf, count, c_datatype, dest, tag, c_comm, &c_request);
 }
 
 // MPI_IRECV

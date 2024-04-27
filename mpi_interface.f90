@@ -28,34 +28,34 @@ module mpi_interface
         end subroutine my_MPI_Barrier
 
         subroutine my_MPI_Abort(Fcomm, errorcode, ierr) bind(C, name="my_MPI_Abort")
-            use, intrinsic :: iso_c_binding
+            use iso_c_binding
             integer(c_int), value :: Fcomm
             integer(c_int), value :: errorcode
             integer(c_int), intent(out) :: ierr
         end subroutine my_MPI_Abort
 
         subroutine my_MPI_Waitall(count, array_of_requests, array_of_statuses, ierr) bind(C, name="my_MPI_Waitall")
-            use, intrinsic :: iso_c_binding
+            use iso_c_binding
             integer(c_int), value :: count
             integer(c_int), dimension(*), intent(in) :: array_of_requests
             integer(c_int), dimension(*), intent(in) :: array_of_statuses
             integer(c_int), intent(out) :: ierr
         end subroutine my_MPI_Waitall
 
-        subroutine my_MPI_Isend(buf, count, datatype, dest, tag, comm, request, ierr) bind(C, name="my_MPI_Isend")
-            use, intrinsic :: iso_c_binding
-            type(c_ptr), value :: buf
+        subroutine my_MPI_Isend(buf, count, datatype, dest, tag, Fcomm, request, ierr) bind(C, name="my_MPI_Isend")
+            use iso_c_binding
+            integer(c_int), value :: buf
             integer(c_int), intent(in) :: count
             integer(c_int), value :: datatype
             integer(c_int), intent(in) :: dest
             integer(c_int), intent(in) :: tag
-            integer(c_int), value :: comm
+            integer(c_int), value :: Fcomm
             integer(c_int), intent(out) :: request
             integer(c_int), intent(out) :: ierr
         end subroutine my_MPI_Isend
 
         subroutine my_MPI_Irecv(buf, count, datatype, source, tag, comm, request, ierr) bind(C, name="my_MPI_Irecv")
-            use, intrinsic :: iso_c_binding
+            use iso_c_binding
             integer(c_int), value :: buf
             integer(c_int), intent(in) :: count
             integer(c_int), value :: datatype
