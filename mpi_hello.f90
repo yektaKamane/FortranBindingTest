@@ -8,6 +8,11 @@ program mpi_hello
     integer(c_int) :: rank
     integer(c_int) :: c_mpi_comm_world
     integer(c_int) :: c_mpi_comm_self
+    integer(c_int) :: c_mpi_datatype
+    integer(c_int) :: dest_rank
+    integer(c_int) :: tag
+    type(c_ptr) :: value
+    integer(c_int) :: request
 
     ! Initialize MPI
     call MPI_Init(ierr)
@@ -23,8 +28,13 @@ program mpi_hello
     ! Synchronize all processes before proceeding
     call my_MPI_Barrier(c_mpi_comm_world, ierr)
 
-    if (rank == 2) then
-        call raise_sigint_c()
+    if (rank == 1) then
+        ! Process 1 sends a value to process 0 using MPI_ISEND
+        dest_rank = 0
+        tag = 123
+        value = 42
+        c_mpi_datatype = MPI_INTEGER
+        call my_MPI_Isend(value, 1, c_mpi_datatype, dest_rank, tag, c_mpi_comm_world, request, ierr)
     else
         print *, 'I am process', rank
     end if
