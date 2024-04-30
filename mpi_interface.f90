@@ -21,6 +21,13 @@ module mpi_interface
             integer(c_int), intent(out) :: ierr
         end subroutine my_MPI_Comm_rank
 
+        subroutine my_MPI_Comm_size(Fcomm, size, ierr) bind(C, name="my_MPI_Comm_size")
+            use iso_c_binding
+            integer(c_int), value :: Fcomm
+            integer(c_int), intent(out) :: size
+            integer(c_int), intent(out) :: ierr
+        end subroutine my_MPI_Comm_size
+
         subroutine my_MPI_Barrier(Fcomm, ierr) bind(C, name="my_MPI_Barrier")
             use iso_c_binding
             integer(c_int), value :: Fcomm
