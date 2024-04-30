@@ -62,7 +62,7 @@ program mpi_hello
     requests(1) = send_request
     requests(2) = recv_request
     ! Wait for the completion of all communication requests
-    call MPI_WAITALL(2, requests, statuses, ierr)
+    call my_MPI_Waitall(2, requests, statuses, ierr)
 
     print *, 'I am process', rank, 'value', recv_value
 

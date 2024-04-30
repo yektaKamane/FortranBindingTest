@@ -42,20 +42,20 @@ void my_MPI_Comm_size(MPI_Fint Fcomm, int *size, int *ierr){
 }
 
 // MPI_WAITALL
-void my_MPI_Waitall(int *count, MPI_Fint *array_of_requests, MPI_Fint *array_of_statuses, int *ierr) {
-    MPI_Request *cmpi_requests = (MPI_Request *)malloc(*count * sizeof(MPI_Request));
-    MPI_Status *cmpi_statuses = (MPI_Status *)malloc(*count * sizeof(MPI_Status));
+void my_MPI_Waitall(int count, MPI_Fint *array_of_requests, MPI_Fint *array_of_statuses, int *ierr) {
+    MPI_Request *cmpi_requests = (MPI_Request *)malloc(count * sizeof(MPI_Request));
+    MPI_Status *cmpi_statuses = (MPI_Status *)malloc(count * sizeof(MPI_Status));
     MPI_Status c_status;
     
     // Convert Fortran MPI handles to C MPI handles
-    for (int i = 0; i < *count; ++i) {
+    for (int i = 0; i < count; ++i) {
         cmpi_requests[i] = MPI_Request_f2c(array_of_requests[i]);
         MPI_Status_f2c(&array_of_statuses[i], &c_status);
         cmpi_statuses[i] = c_status;
     }
     
     // Call MPI_Waitall
-    *ierr = MPI_Waitall(*count, cmpi_requests, cmpi_statuses);
+    MPI_Waitall(count, cmpi_requests, cmpi_statuses);
     
     // Free allocated memory
     free(cmpi_requests);
