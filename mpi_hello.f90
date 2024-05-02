@@ -15,7 +15,7 @@ program mpi_hello
     ! integer :: send_value, recv_value
     integer :: requests(2)
     integer :: statuses(MPI_STATUS_SIZE, 2)
-    integer :: status(MPI_STATUS_SIZE)
+    ! integer :: status(MPI_STATUS_SIZE)
     type(c_ptr) :: ptr_snd, ptr_rec
 
     REAL(KIND=8), DIMENSION(:), POINTER :: snd_buffer, rec_buffer
@@ -69,7 +69,7 @@ program mpi_hello
     requests(1) = send_request
     requests(2) = recv_request
     ! Wait for the completion of all communication requests
-    call MPI_Waitall(2, requests, statuses, ierr)
+    call my_MPI_Waitall(2, requests, statuses, ierr)
     ! call MPI_Wait(recv_request, status, ierr)
     
 

@@ -43,6 +43,10 @@ void my_MPI_Comm_size(MPI_Fint Fcomm, int *size, int *ierr){
 
 // MPI_WAITALL
 void my_MPI_Waitall(int count, MPI_Fint *array_of_requests, MPI_Fint *array_of_statuses, int *ierr) {
+    // if the statuses are the output of the function you might want to 
+    // define them as c type inside the function and then convert back to fortran
+    // after the mpi call
+    // just like the my_mpi_Wait function
     MPI_Request *cmpi_requests = (MPI_Request *)malloc(count * sizeof(MPI_Request));
     MPI_Status *cmpi_statuses = (MPI_Status *)malloc(count * sizeof(MPI_Status));
     MPI_Status c_status;
@@ -68,7 +72,6 @@ void my_MPI_Isend(void *buf, int count, MPI_Fint datatype, int *dest, int tag, M
     MPI_Comm c_comm = MPI_Comm_f2c(Fcomm);
     MPI_Datatype c_datatype = MPI_Type_f2c(datatype);
     MPI_Request c_request;
-    
     MPI_Isend(buf, count, c_datatype, *dest, tag, c_comm, &c_request);
     *request = MPI_Request_c2f(c_request);
 }
@@ -79,22 +82,14 @@ void my_MPI_Irecv(void *buf, int count, MPI_Fint datatype, int *source, int tag,
     MPI_Comm c_comm = MPI_Comm_f2c(Fcomm);
     MPI_Datatype c_datatype = MPI_Type_f2c(datatype);
     MPI_Request c_request;
-    
     MPI_Irecv(buf, count, c_datatype, *source, tag, c_comm, &c_request);
     *request = MPI_Request_c2f(c_request);
-
-    // MPI_Status s;
-    // MPI_Wait(&c_request, &s);
-    // double *int_ptr = (double *)buf;
-    // printf("Value of the void pointer 0: %f\n", int_ptr[0]);
-    // printf("Value of the void pointer 1: %f\n", int_ptr[1]);
 }
 
 void my_MPI_Wait(MPI_Fint request, MPI_Fint status, int *ierr){
     MPI_Request c_request = MPI_Request_f2c(request);
     MPI_Status c_status;
     MPI_Status_f2c(&status, &c_status);
-    
     MPI_Wait(&c_request, &c_status);
 }
 
