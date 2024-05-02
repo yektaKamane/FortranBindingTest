@@ -49,10 +49,18 @@ module mpi_interface
             integer(c_int), intent(out) :: ierr
         end subroutine my_MPI_Waitall
 
+        subroutine my_MPI_Wait(request, status, ierr) bind(C, name="my_MPI_Wait")
+            use iso_c_binding
+            use mpi
+            integer(c_int), value :: request
+            integer(c_int), dimension(MPI_STATUS_SIZE) :: status
+            integer(c_int), intent(out) :: ierr
+        end subroutine my_MPI_Wait
+
         subroutine my_MPI_Isend(buf, count, datatype, dest, tag, Fcomm, request, ierr) bind(C, name="my_MPI_Isend")
             use iso_c_binding
-            integer(c_int), value :: buf
-            integer(c_int), intent(in) :: count
+            type(c_ptr), value :: buf
+            integer(c_int), value :: count
             integer(c_int), value :: datatype
             integer(c_int), intent(in) :: dest
             integer(c_int), intent(in) :: tag
@@ -61,14 +69,14 @@ module mpi_interface
             integer(c_int), intent(out) :: ierr
         end subroutine my_MPI_Isend
 
-        subroutine my_MPI_Irecv(buf, count, datatype, source, tag, comm, request, ierr) bind(C, name="my_MPI_Irecv")
+        subroutine my_MPI_Irecv(buf, count, datatype, source, tag, Fcomm, request, ierr) bind(C, name="my_MPI_Irecv")
             use iso_c_binding
-            integer(c_int), value :: buf
-            integer(c_int), intent(in) :: count
+            type(c_ptr), value :: buf
+            integer(c_int), value :: count
             integer(c_int), value :: datatype
             integer(c_int), intent(in) :: source
             integer(c_int), intent(in) :: tag
-            integer(c_int), value :: comm
+            integer(c_int), value :: Fcomm
             integer(c_int), intent(out) :: request
             integer(c_int), intent(out) :: ierr
         end subroutine my_MPI_Irecv

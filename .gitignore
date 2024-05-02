@@ -1,0 +1,41 @@
+# Compiled Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.lib
+*.a
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Temporary files
+*.swp
+*~
+*.DS_Store
+
+# Dependency files
+*.d
+
+# Build directory
+/build/
+
+# IDE specific files
+.vscode/
+.idea/
+
+# Compiled C files
+*.c.*
