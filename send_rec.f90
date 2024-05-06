@@ -1,4 +1,4 @@
-program mpi_hello
+program mpi_send_rec
     use iso_c_binding
     use mpi
     use mpi_interface
@@ -83,4 +83,4 @@ program mpi_hello
     DEALLOCATE(snd_buffer)
     DEALLOCATE(rec_buffer)
 
-end program mpi_hello
+end program mpi_send_rec

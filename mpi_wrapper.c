@@ -68,7 +68,9 @@ void my_MPI_Waitall(int count, MPI_Fint *array_of_requests, MPI_Fint *array_of_s
 
 
 // MPI_ISEND
-void my_MPI_Isend(void *buf, int count, MPI_Fint datatype, int *dest, int tag, MPI_Fint Fcomm, MPI_Fint *request, int *ierr) {
+void my_MPI_Isend(void *buf, int count, MPI_Fint datatype, int *dest,
+                 int tag, MPI_Fint Fcomm, MPI_Fint *request, int *ierr){
+
     MPI_Comm c_comm = MPI_Comm_f2c(Fcomm);
     MPI_Datatype c_datatype = MPI_Type_f2c(datatype);
     MPI_Request c_request;
@@ -76,9 +78,10 @@ void my_MPI_Isend(void *buf, int count, MPI_Fint datatype, int *dest, int tag, M
     *request = MPI_Request_c2f(c_request);
 }
 
-
 // MPI_IRECV
-void my_MPI_Irecv(void *buf, int count, MPI_Fint datatype, int *source, int tag, MPI_Fint Fcomm, MPI_Fint *request, int *ierr) {
+void my_MPI_Irecv(void *buf, int count, MPI_Fint datatype, int *source, 
+                int tag, MPI_Fint Fcomm, MPI_Fint *request, int *ierr){
+
     MPI_Comm c_comm = MPI_Comm_f2c(Fcomm);
     MPI_Datatype c_datatype = MPI_Type_f2c(datatype);
     MPI_Request c_request;
@@ -93,24 +96,33 @@ void my_MPI_Wait(MPI_Fint request, MPI_Fint status, int *ierr){
     MPI_Wait(&c_request, &c_status);
 }
 
+void my_MPI_Gather(void *sendbuf, int sendcount, MPI_Fint sendtype,
+               void *recvbuf, int recvcount, MPI_Fint recvtype,
+               int root, MPI_Fint Fcomm, int *ierr){
 
+    MPI_Comm c_comm = MPI_Comm_f2c(Fcomm);
+    MPI_Datatype c_send_datatype = MPI_Type_f2c(sendtype);
+    MPI_Datatype c_rec_datatype = MPI_Type_f2c(recvtype);
+    
+    MPI_Gather(sendbuf, sendcount, c_send_datatype, recvbuf, 
+                recvcount, c_rec_datatype, root, c_comm);
+}
 
+// MPI_ALLGATHER
+void my_MPI_Allgather(void *sendbuf, int sendcount, MPI_Fint sendtype,
+                  void *recvbuf, int recvcount, MPI_Fint recvtype,
+                  MPI_Fint Fcomm, int *ierr){
 
-// MPI_STATUS_SIZE
-
-// MPI_DOUBLE_PRECISION
+    MPI_Comm c_comm = MPI_Comm_f2c(Fcomm);
+    MPI_Datatype c_send_datatype = MPI_Type_f2c(sendtype);
+    MPI_Datatype c_rec_datatype = MPI_Type_f2c(recvtype);
+    
+    MPI_Allgather(sendbuf, sendcount, c_send_datatype, recvbuf, 
+                recvcount, c_rec_datatype, c_comm);
+    }
 
 // MPI_REDUCE
 
-// MPI_SUM
-
-// MPI_MIN
-
-// MPI_MAX
-
-// MPI_INTEGER
-
 // MPI_ALLREDUCE
 
-// MPI_ALLGATHER
 

@@ -81,5 +81,32 @@ module mpi_interface
             integer(c_int), intent(out) :: ierr
         end subroutine my_MPI_Irecv
 
+        subroutine my_MPI_Gather(sendbuf, sendcount, sendtype, recvbufer, recvcount, recvtype, &
+             root, Fcomm, ierr) bind(C, name="my_MPI_Gather")
+            use iso_c_binding
+            type(c_ptr), value :: sendbuf
+            integer(c_int), value :: sendcount
+            integer(c_int), value :: sendtype
+            type(c_ptr), value :: recvbufer
+            integer(c_int), value :: recvcount
+            integer(c_int), value :: recvtype
+            integer(c_int), value :: root
+            integer(c_int), value :: Fcomm
+            integer(c_int), intent(out) :: ierr
+        end subroutine my_MPI_Gather
+
+        subroutine my_MPI_Allgather(sendbuf, sendcount, sendtype, recvbufer, recvcount, recvtype, &
+             Fcomm, ierr) bind(C, name="my_MPI_Allgather")
+            use iso_c_binding
+            type(c_ptr), value :: sendbuf
+            integer(c_int), value :: sendcount
+            integer(c_int), value :: sendtype
+            type(c_ptr), value :: recvbufer
+            integer(c_int), value :: recvcount
+            integer(c_int), value :: recvtype
+            integer(c_int), value :: Fcomm
+            integer(c_int), intent(out) :: ierr
+        end subroutine my_MPI_Allgather
+
     end interface
 end module mpi_interface

@@ -5,10 +5,15 @@ MPIFC = mpif90
 FFLAGS = -Wall -Wextra
 
 # Source files
-SRC = mpi_hello.f90 mpi_interface.f90
+SRCS = send_rec.f90 hello.f90 gather.f90 allgather.f90
+# Get the list of source file names without the extension
+BASE_SRCS := $(basename $(SRCS))
 
-# Executable name
-TARGET = hello_world
+# Executable names
+TARGETS = $(BASE_SRCS)
+
+# Interface file
+INTERFACE_FILE = mpi_interface.f90
 
 # Include path
 INCLUDE_PATH = /usr/local/include/legio
@@ -23,12 +28,12 @@ LIBS = legio
 MPI_LIB = mpi
 
 # Default target
-all: $(TARGET)
+all: $(TARGETS)
 
-# Rule to build the executable
-$(TARGET): $(SRC)
-	$(MPIFC) $(FFLAGS) -o $@ $^ -L. -lmpi_wrapper -L$(LIB_PATH) -I$(INCLUDE_PATH) -l$(LIBS) -l$(MPI_LIB) -lstdc++
+# Rule to build each executable
+%: %.f90 $(INTERFACE_FILE)
+	$(MPIFC) $(FFLAGS) -o $@ $< $(INTERFACE_FILE) -L. -lmpi_wrapper -L$(LIB_PATH) -I$(INCLUDE_PATH) -l$(LIBS) -l$(MPI_LIB) -lstdc++
 
 # Clean rule
 clean:
-	rm -f $(TARGET)
+	rm -f $(TARGETS)
