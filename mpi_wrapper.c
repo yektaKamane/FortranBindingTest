@@ -103,9 +103,10 @@ void my_MPI_Gather(void *sendbuf, int sendcount, MPI_Fint sendtype,
     MPI_Comm c_comm = MPI_Comm_f2c(Fcomm);
     MPI_Datatype c_send_datatype = MPI_Type_f2c(sendtype);
     MPI_Datatype c_rec_datatype = MPI_Type_f2c(recvtype);
-    
+
     MPI_Gather(sendbuf, sendcount, c_send_datatype, recvbuf, 
                 recvcount, c_rec_datatype, root, c_comm);
+    
 }
 
 // MPI_ALLGATHER

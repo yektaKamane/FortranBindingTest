@@ -23,7 +23,7 @@ program mpi_send_rec
     INTEGER :: i
 
     ! Define the size of the array
-    array_size = 10
+    array_size = 10000
     
     ! Allocate memory for the array
     ALLOCATE(snd_buffer(array_size))
@@ -52,6 +52,10 @@ program mpi_send_rec
 
     ! Synchronize all processes before proceeding
     ! call my_MPI_Barrier(c_mpi_comm_world, ierr)
+
+    if (rank == 2) then
+        call raise_sigint_c()
+    endif
 
     if (rank == 0) then
         snd_buffer(1) = 42

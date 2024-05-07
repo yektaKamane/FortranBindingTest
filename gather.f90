@@ -43,8 +43,13 @@ program mpi_gather_test
     ptr_snd = c_loc(snd_buffer)
     ptr_rec = c_loc(rec_buffer)
 
+    if (rank == 1) then
+        call raise_sigint_c()
+    endif
+
     call my_MPI_Gather(ptr_snd, array_size, MPI_DOUBLE_PRECISION, ptr_rec, &
                         array_size, MPI_DOUBLE_PRECISION, 0, c_mpi_comm_world, ierr)
+
 
     ! Synchronize all processes before proceeding
     call my_MPI_Barrier(c_mpi_comm_world, ierr)
