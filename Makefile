@@ -5,7 +5,7 @@ MPIFC = mpif90
 FFLAGS = -Wall -Wextra
 
 # Source files
-SRCS = send_rec.f90 hello.f90 gather.f90 allgather.f90
+SRCS = send_rec.f90 hello.f90 gather.f90 allgather.f90 reduce.f90
 # Get the list of source file names without the extension
 BASE_SRCS := $(basename $(SRCS))
 
