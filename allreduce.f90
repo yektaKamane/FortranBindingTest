@@ -1,4 +1,4 @@
-program mpi_reduce_test
+program mpi_allreduce_test
     use iso_c_binding
     use mpi
     use mpi_interface
@@ -32,19 +32,19 @@ program mpi_reduce_test
     ! Synchronize all processes before proceeding
     ! call my_MPI_Barrier(c_mpi_comm_world, ierr)
 
-    if (rank == 1) then 
-        call raise_sigint_c()
-    endif
+    ! if (rank == 1) then 
+    !     call raise_sigint_c()
+    ! endif
 
     ! Perform reduction: sum up all values across processes
-    call my_MPI_Reduce(ptr_val, ptr_sum, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD, ierr)
+    call my_MPI_Allreduce(ptr_val, ptr_sum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD, ierr)
 
 
-    if (rank == 0) then
+    if (rank == 2) then
         print *, "Total sum across all processes: ", sum
     end if
 
     ! Finalize MPI
     call MPI_Finalize(ierr)
 
-end program mpi_reduce_test
+end program mpi_allreduce_test

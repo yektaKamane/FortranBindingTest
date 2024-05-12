@@ -89,6 +89,7 @@ void my_MPI_Irecv(void *buf, int count, MPI_Fint datatype, int *source,
     *request = MPI_Request_c2f(c_request);
 }
 
+// MPI_WAIT
 void my_MPI_Wait(MPI_Fint request, MPI_Fint status, int *ierr){
     MPI_Request c_request = MPI_Request_f2c(request);
     MPI_Status c_status;
@@ -96,6 +97,7 @@ void my_MPI_Wait(MPI_Fint request, MPI_Fint status, int *ierr){
     MPI_Wait(&c_request, &c_status);
 }
 
+// MPI_GATHER
 void my_MPI_Gather(void *sendbuf, int sendcount, MPI_Fint sendtype,
                void *recvbuf, int recvcount, MPI_Fint recvtype,
                int root, MPI_Fint comm, int *ierr){
@@ -131,8 +133,18 @@ void my_MPI_Reduce(void *sendbuf, void *recvbuf, int count,
     MPI_Op c_op = MPI_Op_f2c(op);
 
     MPI_Reduce(sendbuf, recvbuf, count, c_datatype, c_op, root, c_comm);
-    }
+}
 
 // MPI_ALLREDUCE
 
+void my_MPI_Allreduce(void *sendbuf, void *recvbuf, int count, 
+                MPI_Fint datatype, MPI_Fint op, MPI_Fint comm, int *ierr){
+
+    MPI_Comm c_comm = MPI_Comm_f2c(comm);
+    MPI_Datatype c_datatype = MPI_Type_f2c(datatype);
+    MPI_Op c_op = MPI_Op_f2c(op);
+
+    MPI_Allreduce(sendbuf, recvbuf, count, c_datatype, c_op, c_comm);
+    
+}
 
