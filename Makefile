@@ -32,7 +32,7 @@ all: $(TARGETS)
 
 # Rule to build each executable
 %: %.f90 $(INTERFACE_FILE)
-	$(MPIFC) $(FFLAGS) -o $@ $< $(INTERFACE_FILE) -L. -lmpi_wrapper -L$(LIB_PATH) -I$(INCLUDE_PATH) -l$(LIBS) -l$(MPI_LIB) -lstdc++
+	$(MPIFC) $(FFLAGS) -o $@ $< $(INTERFACE_FILE) -L$(LIB_PATH) -I$(INCLUDE_PATH) -l$(LIBS) -l$(MPI_LIB) -lstdc++
 
 # Clean rule
 clean:

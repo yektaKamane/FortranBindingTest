@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+extern "C" {
 void raise_sigint() {
     raise(SIGINT);
 }
@@ -145,6 +146,6 @@ void my_MPI_Allreduce(void *sendbuf, void *recvbuf, int count,
     MPI_Op c_op = MPI_Op_f2c(op);
 
     MPI_Allreduce(sendbuf, recvbuf, count, c_datatype, c_op, c_comm);
-    
 }
 
+}
